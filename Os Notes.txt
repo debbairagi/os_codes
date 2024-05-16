@@ -1,2 +1,209 @@
-Fcfs
-sjf
+Algorithm: First Come, First Served (FCFS) Scheduling
+Input: A list of processes with their arrival times and burst times
+Output: Order of execution for the processes, Total waiting time, Average waiting time
+
+Step 1: Initialize Time = 0, Total_Waiting_Time = 0
+Step 2: Sort the list of processes based on their arrival time
+
+Step 3: For each process in the list of processes:
+          a. If Time < process.arrival_time:
+               i. Time = process.arrival_time
+          b. Calculate waiting_time for current process:
+               i. waiting_time = Time - process.arrival_time
+          c. Increment Total_Waiting_Time by waiting_time
+          d. Execute the current process:
+               i. Time += process.burst_time
+          e. Store the completion time of the process
+
+Step 4: Calculate Average_Waiting_Time:
+          a. Average_Waiting_Time = Total_Waiting_Time / number of processes
+
+Step 5: Print the process execution order
+Step 6: Print Total_Waiting_Time
+Step 7: Print Average_Waiting_Time
+
+
+Algorithm: Shortest Job First (SJF) Non-Preemptive Scheduling
+Input: A list of processes with their arrival times and burst times
+Output: Order of execution for the processes, Total waiting time, Average waiting time
+
+Step 1: Initialize Time = 0, Total_Waiting_Time = 0
+Step 2: Create a list, Ready_Queue, to hold processes as they arrive
+
+Step 3: While there are unhandled processes:
+        a. Add processes to Ready_Queue that have arrived by current Time and are not yet handled
+        b. Sort Ready_Queue based on burst time (shortest burst time first)
+        c. If Ready_Queue is empty:
+               i. Advance Time to the arrival time of the next unhandled process
+        d. Else:
+               i. Select the process with the shortest burst time from Ready_Queue
+              ii. Calculate waiting_time for the selected process:
+                   waiting_time = Time - process.arrival_time
+             iii. Increment Total_Waiting_Time by waiting_time
+              iv. Execute the selected process:
+                   Time += process.burst_time
+               v. Remove the process from Ready_Queue and mark as handled
+              vi. Store the completion time of the process
+
+Step 4: Calculate Average_Waiting_Time:
+        a. Average_Waiting_Time = Total_Waiting_Time / number of processes
+
+Step 5: Print the process execution order
+Step 6: Print Total_Waiting_Time
+Step 7: Print Average_Waiting_Time
+
+
+Algorithm: Shortest Remaining Time First (SRTF) Scheduling
+Input: A list of processes with their arrival times and burst times
+Output: Order of execution for the processes, Total waiting time, Average waiting time
+
+Step 1: Initialize Time = 0, Total_Waiting_Time = 0
+Step 2: Create a list, Ready_Queue, to hold processes as they arrive
+Step 3: While there are unhandled or ongoing processes:
+        a. Add processes to Ready_Queue that have arrived by current Time
+        b. If a new process arrives with a shorter remaining time than the current process:
+               i. Preempt the current process
+              ii. Push the current process back to Ready_Queue
+        c. Sort Ready_Queue based on the remaining burst time (shortest first)
+        d. If Ready_Queue is not empty:
+               i. Select the process with the shortest remaining burst time from Ready_Queue
+              ii. If selected process is new or preempted:
+                   - Calculate waiting_time for the selected process:
+                     waiting_time = Time - process.last_start_time - process.total_executed_time
+                   - process.last_start_time = Time
+              iii. Execute the selected process for one time unit:
+                   - process.remaining_burst_time -= 1
+                   - process.total_executed_time += 1
+                   - Time += 1
+              iv. If process.remaining_burst_time == 0:
+                   - Remove the process from Ready_Queue and mark as completed
+                   - Store the completion time of the process
+                   - Increment Total_Waiting_Time by waiting_time
+        e. Else:
+               i. Increment Time (i.e., advance time to the arrival of the next process)
+
+Step 4: Calculate Average_Waiting_Time:
+        a. Average_Waiting_Time = Total_Waiting_Time / number of processes
+
+Step 5: Print the process execution order
+Step 6: Print Total_Waiting_Time
+Step 7: Print Average_Waiting_Time
+
+
+
+Algorithm: Round Robin (RR) Scheduling
+Input: A list of processes with their arrival times and burst times, Time_Quantum
+Output: Order of execution for the processes, Total waiting time, Average waiting time
+
+Step 1: Initialize Time = 0, Total_Waiting_Time = 0
+Step 2: Create a list, Ready_Queue, to hold processes as they arrive
+Step 3: While there are unhandled or ongoing processes:
+        a. Add processes to Ready_Queue that have arrived by the current Time
+        b. If Ready_Queue is not empty:
+               i. Select the process at the front of Ready_Queue
+              ii. Determine the execution time for the process:
+                  - execution_time = min(process.remaining_burst_time, Time_Quantum)
+             iii. Execute the selected process for execution_time:
+                  - process.remaining_burst_time -= execution_time
+                  - Time += execution_time
+              iv. If process.remaining_burst_time > 0:
+                  - Move the process to the end of Ready_Queue
+               v. Else:
+                  - Record the completion time of the process
+                  - Calculate total_waiting_time for the process:
+                    - waiting_time = Time - process.arrival_time - process.burst_time
+                    - Increment Total_Waiting_Time by waiting_time
+        c. Else:
+               i. Increment Time (i.e., advance time to the arrival of the next process)
+
+Step 4: Calculate Average_Waiting_Time:
+        a. Average_Waiting_Time = Total_Waiting_Time / number of processes
+
+Step 5: Print the process execution order
+Step 6: Print Total_Waiting_Time
+Step 7: Print Average_Waiting_Time
+
+
+Algorithm: First Fit Memory Allocation
+Input: 
+    Memory_Blocks[1..Number_of_Blocks] - Sizes of different memory blocks
+    Process_Size[1..Number_of_Processes] - Sizes of processes needing allocation
+Output:
+    Allocation status for each process
+
+Step 1: Initialize Allocation[1..Number_of_Processes] to [-1, ..., -1] (All processes are initially not allocated)
+
+Step 2: For each process P_i from 1 to Number_of_Processes:
+        a. For each block B_j from 1 to Number_of_Blocks:
+            i. If Memory_Blocks[B_j] >= Process_Size[P_i]:
+                - Allocate block B_j to process P_i:
+                    Allocation[P_i] = B_j
+                - Reduce the size of Memory_Blocks[B_j] by Process_Size[P_i]
+                - Break (Move to the next process once allocation is done)
+
+Step 3: Print the Allocation results:
+        For each process P_i from 1 to Number_of_Processes:
+            If Allocation[P_i] != -1:
+                Print "Process P_i is allocated to memory block B_(Allocation[P_i])"
+            Else:
+                Print "Process P_i cannot be allocated"
+
+
+
+Algorithm: Best Fit Memory Allocation
+Input:
+    Memory_Blocks[1..Number_of_Blocks] - Sizes of different memory blocks
+    Process_Size[1..Number_of_Processes] - Sizes of processes needing allocation
+Output:
+    Allocation status for each process
+
+Step 1: Initialize Allocation[1..Number_of_Processes] to [-1, ..., -1] (All processes are initially not allocated)
+
+Step 2: For each process P_i from 1 to Number_of_Processes:
+        a. Set min_size = INFINITY  (To find the smallest fitting block)
+        b. Set index = -1  (To store the index of the best fitting block)
+        c. For each block B_j from 1 to Number_of_Blocks:
+            i. If Memory_Blocks[B_j] >= Process_Size[P_i] AND Memory_Blocks[B_j] < min_size:
+                - min_size = Memory_Blocks[B_j]
+                - index = B_j
+        d. If index != -1:
+            - Allocate block index to process P_i:
+                Allocation[P_i] = index
+            - Reduce the size of Memory_Blocks[index] by Process_Size[P_i]
+
+Step 3: Print the Allocation results:
+        For each process P_i from 1 to Number_of_Processes:
+            If Allocation[P_i] != -1:
+                Print "Process P_i is allocated to memory block B_(Allocation[P_i])"
+            Else:
+                Print "Process P_i cannot be allocated"
+
+
+
+Algorithm: Worst Fit Memory Allocation
+Input:
+    Memory_Blocks[1..Number_of_Blocks] - Sizes of different memory blocks
+    Process_Size[1..Number_of_Processes] - Sizes of processes needing allocation
+Output:
+    Allocation status for each process
+
+Step 1: Initialize Allocation[1..Number_of_Processes] to [-1, ..., -1] (All processes are initially not allocated)
+
+Step 2: For each process P_i from 1 to Number_of_Processes:
+        a. Set max_size = -1  (To find the largest fitting block)
+        b. Set index = -1  (To store the index of the largest fitting block)
+        c. For each block B_j from 1 to Number_of_Blocks:
+            i. If Memory_Blocks[B_j] >= Process_Size[P_i] AND Memory_Blocks[B_j] > max_size:
+                - max_size = Memory_Blocks[B_j]
+                - index = B_j
+        d. If index != -1:
+            - Allocate block index to process P_i:
+                Allocation[P_i] = index
+            - Reduce the size of Memory_Blocks[index] by Process_Size[P_i]
+
+Step 3: Print the Allocation results:
+        For each process P_i from 1 to Number_of_Processes:
+            If Allocation[P_i] != -1:
+                Print "Process P_i is allocated to memory block B_(Allocation[P_i])"
+            Else:
+                Print "Process P_i cannot be allocated"
